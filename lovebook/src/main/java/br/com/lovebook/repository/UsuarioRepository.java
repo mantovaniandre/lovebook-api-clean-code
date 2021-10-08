@@ -9,4 +9,6 @@ import br.com.lovebook.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Optional<Usuario> findByNome(String nome);
+	
+	Optional<Usuario> findByEmailUsuario(String email);
 }

@@ -8,17 +8,16 @@ public class UsuarioDto {
 
 	private String nome;
 	private String sobrenome;
-	
+
 	public UsuarioDto(Optional<Usuario> user) {
 		this.nome = user.get().getNomeUsuario();
 		this.sobrenome = user.get().getSobrenomeUsuario();
 	}
-	
+
 	public UsuarioDto(Usuario user) {
 		this.nome = user.getNomeUsuario();
 		this.sobrenome = user.getSobrenomeUsuario();
 	}
-	
 
 	public String getNome() {
 		return nome;

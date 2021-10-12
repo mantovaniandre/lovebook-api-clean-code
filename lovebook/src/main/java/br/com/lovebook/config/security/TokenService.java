@@ -26,7 +26,7 @@ public class TokenService {
 		Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration));
 
 		return Jwts.builder()
-				.setIssuer("API de CompJogos")
+				.setIssuer("LoveBook")
 				.setSubject(logado.getId().toString())
 				.setIssuedAt(hoje)
 				.setExpiration(dataExpiracao)

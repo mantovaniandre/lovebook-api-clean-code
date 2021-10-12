@@ -8,15 +8,20 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.lovebook.config.security.AutenticacaoViaTokenFilter;
+import br.com.lovebook.config.security.TokenService;
 import br.com.lovebook.dto.UsuarioDto;
+import br.com.lovebook.form.AtualizacaoUsuarioForm;
 import br.com.lovebook.form.UsuarioForm;
 import br.com.lovebook.model.Usuario;
 import br.com.lovebook.repository.PerfilRepository;
@@ -31,10 +36,13 @@ public class UsuarioController {
 	private UsuarioRepository usuarioRepository;
 	@Autowired
 	private PerfilRepository perfilRepository;
+	@Autowired
+	private TokenService tokenService;
 
 	@GetMapping
-	public ResponseEntity<UsuarioDto> exibirUsuario(String nome, HttpServletRequest request) {
-		Optional<Usuario> user = usuarioRepository.findByNome(nome);
+	public ResponseEntity<UsuarioDto> exibirUsuario(HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		if (user.isPresent()) {
 			return ResponseEntity.ok(new UsuarioDto(user));
 		}
@@ -55,6 +63,34 @@ public class UsuarioController {
 	public ResponseEntity<?> remover(HttpServletRequest request) {
 		usuarioRepository.deleteById((long) 1);
 		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping
+	@Transactional
+	public ResponseEntity<UsuarioDto> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm atualizacaoUsuarioForm, HttpServletRequest request){
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+		
+		if(!atualizacaoUsuarioForm.getSenhaUsuario().isBlank()) {
+			atualizacaoUsuarioForm.setSenhaUsuario(new BCryptPasswordEncoder().encode(atualizacaoUsuarioForm.getSenhaUsuario()));
+		}else {
+			atualizacaoUsuarioForm.setSenhaUsuario(user.get().getSenhaUsuario());
+		}
+		
+		if(user.isPresent()) {
+			Optional<Usuario> usuario = atualizacaoUsuarioForm.atualizar(idUsuarioLogado, usuarioRepository);
+			return ResponseEntity.ok(new UsuarioDto(usuario));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	
+	private Long idUsuarioLogado(HttpServletRequest request) {
+		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService, usuarioRepository);
+		String token = autenticacaoViaTokenFilter.recuperarToken(request);
+		Long idUsuarioLogado = tokenService.getIdUsuario(token);
+		return idUsuarioLogado;
 	}
 
 }

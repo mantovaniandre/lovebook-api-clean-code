@@ -27,6 +27,11 @@ public class UsuarioDto {
 	public UsuarioDto(Usuario user) {
 		this.nome = user.getNomeUsuario();
 		this.sobrenome = user.getSobrenomeUsuario();
+		this.emailUsuario = user.getEmailUsuario();
+		this.sexoUsuario = user.getSexoUsuario();
+		this.cepUsuario = user.getCepUsuario();
+		this.cidadeUsuario = user.getCidadeUsuario();
+		this.estadoUsuario = user.getEstadoUsuario();
 	}
 
 	public String getNome() {

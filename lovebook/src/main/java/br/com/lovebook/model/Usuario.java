@@ -132,6 +132,38 @@ public class Usuario implements UserDetails {
 		this.perfil = tipoUsuario;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getSobrenome() {
+		return sobrenome;
+	}
+
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	public List<Livro> getListaLivro() {
+		return listaLivro;
+	}
+
+	public void setListaLivro(List<Livro> listaLivro) {
+		this.listaLivro = listaLivro;
+	}
+
 	@Override
 	public String toString() {
 		return "CadastrarUsuarioModel [id=" + id + ", nomeUsuario=" + nome + ", sobrenomeUsuario=" + sobrenome

@@ -53,6 +53,7 @@ public class UsuarioController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form) {
+		form.setSenhaUsuario(new BCryptPasswordEncoder().encode(form.getSenhaUsuario()));
 		Usuario usuario = form.converter(perfilRepository);
 		usuarioRepository.save(usuario);
 		return ResponseEntity.ok(new UsuarioDto(usuario));
@@ -61,33 +62,43 @@ public class UsuarioController {
 	@DeleteMapping
 	@Transactional
 	public ResponseEntity<?> remover(HttpServletRequest request) {
-		usuarioRepository.deleteById((long) 1);
-		return ResponseEntity.ok().build();
-	}
-	
-	@PutMapping
-	@Transactional
-	public ResponseEntity<UsuarioDto> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm atualizacaoUsuarioForm, HttpServletRequest request){
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
-		
-		if(!atualizacaoUsuarioForm.getSenhaUsuario().isBlank()) {
-			atualizacaoUsuarioForm.setSenhaUsuario(new BCryptPasswordEncoder().encode(atualizacaoUsuarioForm.getSenhaUsuario()));
-		}else {
-			atualizacaoUsuarioForm.setSenhaUsuario(user.get().getSenhaUsuario());
-		}
-		
-		if(user.isPresent()) {
-			Optional<Usuario> usuario = atualizacaoUsuarioForm.atualizar(idUsuarioLogado, usuarioRepository);
-			return ResponseEntity.ok(new UsuarioDto(usuario));
+
+		if (user.isPresent()) {
+			usuarioRepository.deleteById(idUsuarioLogado);
+			return ResponseEntity.ok().build();
 		}
 		
 		return ResponseEntity.notFound().build();
+		
 	}
-	
-	
+
+	@PutMapping
+	@Transactional
+	public ResponseEntity<UsuarioDto> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm atualizacaoUsuarioForm,
+			HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+
+		if (!atualizacaoUsuarioForm.getSenhaUsuario().isBlank()) {
+			atualizacaoUsuarioForm
+					.setSenhaUsuario(new BCryptPasswordEncoder().encode(atualizacaoUsuarioForm.getSenhaUsuario()));
+		} else {
+			atualizacaoUsuarioForm.setSenhaUsuario(user.get().getSenhaUsuario());
+		}
+
+		if (user.isPresent()) {
+			Optional<Usuario> usuario = atualizacaoUsuarioForm.atualizar(idUsuarioLogado, usuarioRepository);
+			return ResponseEntity.ok(new UsuarioDto(usuario));
+		}
+
+		return ResponseEntity.notFound().build();
+	}
+
 	private Long idUsuarioLogado(HttpServletRequest request) {
-		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService, usuarioRepository);
+		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService,
+				usuarioRepository);
 		String token = autenticacaoViaTokenFilter.recuperarToken(request);
 		Long idUsuarioLogado = tokenService.getIdUsuario(token);
 		return idUsuarioLogado;

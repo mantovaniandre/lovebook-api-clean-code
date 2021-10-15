@@ -1,0 +1,88 @@
+package br.com.lovebook.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.lovebook.config.security.AutenticacaoViaTokenFilter;
+import br.com.lovebook.config.security.TokenService;
+import br.com.lovebook.dto.LivroDto;
+import br.com.lovebook.form.PurchaseForm;
+import br.com.lovebook.model.Livro;
+import br.com.lovebook.model.Usuario;
+import br.com.lovebook.repository.LivroRepository;
+import br.com.lovebook.repository.UsuarioRepository;
+
+@CrossOrigin(allowedHeaders = "*")
+@RestController
+@RequestMapping("/purchase")
+public class PurchaseController {
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+
+	@Autowired
+	private LivroRepository livroRepository;
+
+	@Autowired
+	private TokenService tokenService;
+	
+	@GetMapping
+	@Transactional
+	public ResponseEntity<List<Livro>> listarCompras(HttpServletRequest request){
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+		
+		if(user.isPresent()) {
+			return ResponseEntity.ok(user.get().getListaLivro());
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+
+	@PostMapping
+	@Transactional
+	public ResponseEntity<?> purchase(@RequestBody @Valid PurchaseForm purchaseForm, HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+
+		if (user.isPresent()) {
+			if (user.get().getTipoUsuario().getId() == 1) {
+				for (Long id : purchaseForm.getListaIds()) {
+					Optional<Livro> livro = livroRepository.findById(id);
+					if (livro.isPresent()) {
+						user.get().getListaLivro().add(livro.get());
+					}
+				}
+				return ResponseEntity.ok().build();
+			} else {
+				return ResponseEntity.badRequest().build();
+			}
+
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+
+	}
+
+	private Long idUsuarioLogado(HttpServletRequest request) {
+		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService,
+				usuarioRepository);
+		String token = autenticacaoViaTokenFilter.recuperarToken(request);
+		Long idUsuarioLogado = tokenService.getIdUsuario(token);
+		return idUsuarioLogado;
+	}
+
+}

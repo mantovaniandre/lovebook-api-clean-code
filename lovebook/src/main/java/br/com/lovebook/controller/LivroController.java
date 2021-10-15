@@ -39,12 +39,11 @@ public class LivroController {
 	private TokenService tokenService;
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	
+
 	@GetMapping
-	public ResponseEntity<List<Livro>> consultar(String nome, HttpServletRequest request){
-		List<Livro> livros = livroRepository.findByNomeLike(nome+"%");
-		if(livros.isEmpty()) {
+	public ResponseEntity<List<Livro>> consultar(String nome, HttpServletRequest request) {
+		List<Livro> livros = livroRepository.findByNomeLike(nome + "%");
+		if (livros.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 //		List<LivroDto> livrosDto = new ArrayList<>();
@@ -53,43 +52,59 @@ public class LivroController {
 //		}
 		return ResponseEntity.ok(livros);
 	}
-	
+
 	@PostMapping
 	@Transactional
-	public ResponseEntity<LivroDto> cadastrar(@RequestBody @Valid LivroForm livroForm){
-		Livro livro = livroForm.converter();
-		livroRepository.save(livro);
-		return ResponseEntity.ok(new LivroDto(livro));
-		
+	public ResponseEntity<LivroDto> cadastrar(@RequestBody @Valid LivroForm livroForm, HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+
+		if (user.get().getTipoUsuario().getId() == 2) {
+			Livro livro = livroForm.converter();
+			livroRepository.save(livro);
+			return ResponseEntity.ok(new LivroDto(livro));
+		}
+
+		return ResponseEntity.badRequest().build();
+
 	}
-	
+
 	@DeleteMapping
 	@Transactional
-	public ResponseEntity<?> remover(HttpServletRequest request){
-		livroRepository.deleteById((long) 1);
-		return ResponseEntity.ok().build();
-	}
-	
-	@PutMapping
-	@Transactional
-	public ResponseEntity<LivroDto> atualizar(@RequestBody @Valid AtualizacaoLivroForm atualizacaoLivroForm, HttpServletRequest request){
+	public ResponseEntity<?> remover(HttpServletRequest request, Long id) {
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		
 		if(user.get().getTipoUsuario().getId() == 2) {
-			Optional<Livro> livro = atualizacaoLivroForm.atualizar(livroRepository);
-			return ResponseEntity.ok(new LivroDto(livro));
+			livroRepository.deleteById(id);
+			return ResponseEntity.ok().build();
 		}
 		
 		return ResponseEntity.badRequest().build();
-		
 	}
-	
+
+	@PutMapping
+	@Transactional
+	public ResponseEntity<LivroDto> atualizar(@RequestBody @Valid AtualizacaoLivroForm atualizacaoLivroForm,
+			HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+
+		if (user.get().getTipoUsuario().getId() == 2) {
+			Optional<Livro> livro = atualizacaoLivroForm.atualizar(livroRepository);
+			return ResponseEntity.ok(new LivroDto(livro));
+		}
+
+		return ResponseEntity.badRequest().build();
+
+	}
+
 	private Long idUsuarioLogado(HttpServletRequest request) {
-		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService, usuarioRepository);
+		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService,
+				usuarioRepository);
 		String token = autenticacaoViaTokenFilter.recuperarToken(request);
 		Long idUsuarioLogado = tokenService.getIdUsuario(token);
 		return idUsuarioLogado;
 	}
-	
+
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lovebook.config.security.AutenticacaoViaTokenFilter;
@@ -41,8 +42,8 @@ public class LivroController {
 	private UsuarioRepository usuarioRepository;
 
 	@GetMapping
-	public ResponseEntity<List<Livro>> consultar(String nome, HttpServletRequest request) {
-		List<Livro> livros = livroRepository.findByNomeLike(nome + "%");
+	public ResponseEntity<List<Livro>> consultar(@RequestParam(defaultValue = "") String nome, @RequestParam(defaultValue = "") String categoria, @RequestParam(defaultValue = "") String autor, @RequestParam(defaultValue = "") String editora, HttpServletRequest request) {
+		List<Livro> livros = livroRepository.findByNomeLikeAndCategoriaLikeAndNomeDoAutorLikeAndEditoraLike(nome + "%", categoria + '%', autor + "%", editora + "%");
 		if (livros.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

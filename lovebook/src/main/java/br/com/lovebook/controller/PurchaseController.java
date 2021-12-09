@@ -70,7 +70,7 @@ public class PurchaseController {
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
 		if (user.isPresent()) {
-			if (user.get().getTipoUsuario().getId() == 1) {
+			if (user.get().getPerfil().getId() == 2) {
 				for (Long id : purchaseForm.getListaIds()) {
 					Optional<Livro> livro = livroRepository.findById(id);
 					if (livro.isPresent()) {

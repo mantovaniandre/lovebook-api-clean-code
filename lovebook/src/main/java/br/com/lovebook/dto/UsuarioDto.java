@@ -15,32 +15,54 @@ public class UsuarioDto {
 	private String cidadeUsuario;
 	private String estadoUsuario;
 	private String senhaUsuario;
+	private String enderecoUsuario;
+	private String numeroEnderecoUsuario;
+	private String complementoEnderecoUsuario;
+	private String numeroCartaoCredito;
+	private String nomeCartaoCredito;
+	private String mesExpiracaoCartaoCredito;
+	private String anoExpiracaoCartaoCredito;
+	private String codigoSegurancaCartaoCredito;
 	private Perfil tipoUsuario;
 
 	public UsuarioDto(Optional<Usuario> user) {
-		this.nome = user.get().getNomeUsuario();
-		this.sobrenome = user.get().getSobrenomeUsuario();
+		this.nome = user.get().getNome();
+		this.sobrenome = user.get().getSobrenome();
 		this.emailUsuario = user.get().getEmailUsuario();
 		this.sexoUsuario = user.get().getSexoUsuario();
 		this.cepUsuario = user.get().getCepUsuario();
 		this.cidadeUsuario = user.get().getCidadeUsuario();
 		this.estadoUsuario = user.get().getEstadoUsuario();
 		this.senhaUsuario = user.get().getPassword();
+		this.enderecoUsuario = user.get().getEnderecoUsuario();
+		this.numeroEnderecoUsuario = user.get().getNumeroEnderecoUsuario();
+		this.complementoEnderecoUsuario = user.get().getComplementoEnderecoUsuario();
+		this.numeroCartaoCredito = user.get().getNumeroCartaoCredito();
+		this.nomeCartaoCredito = user.get().getNomeCartaoCredito();
+		this.mesExpiracaoCartaoCredito = user.get().getMesExpiracaoCartaoCredito();
+		this.anoExpiracaoCartaoCredito = user.get().getAnoExpiracaoCartaoCredito();
+		this.codigoSegurancaCartaoCredito = user.get().getCodigoSegurancaCartaoCredito();
 		this.tipoUsuario = user.get().getPerfil();
-	
+		
 	}
 
-	
-
 	public UsuarioDto(Usuario user) {
-		this.nome = user.getNomeUsuario();
-		this.sobrenome = user.getSobrenomeUsuario();
+		this.nome = user.getNome();
+		this.sobrenome = user.getSobrenome();
 		this.emailUsuario = user.getEmailUsuario();
 		this.sexoUsuario = user.getSexoUsuario();
 		this.cepUsuario = user.getCepUsuario();
 		this.cidadeUsuario = user.getCidadeUsuario();
 		this.estadoUsuario = user.getEstadoUsuario();
 		this.senhaUsuario = user.getPassword();
+		this.enderecoUsuario = user.getEnderecoUsuario();
+		this.numeroEnderecoUsuario = user.getNumeroEnderecoUsuario();
+		this.complementoEnderecoUsuario = user.getComplementoEnderecoUsuario();
+		this.numeroCartaoCredito = user.getNumeroCartaoCredito();
+		this.nomeCartaoCredito = user.getNomeCartaoCredito();
+		this.mesExpiracaoCartaoCredito = user.getMesExpiracaoCartaoCredito();
+		this.anoExpiracaoCartaoCredito = user.getAnoExpiracaoCartaoCredito();
+		this.codigoSegurancaCartaoCredito = user.getCodigoSegurancaCartaoCredito();
 		this.tipoUsuario = user.getPerfil();
 	}
 
@@ -108,9 +130,90 @@ public class UsuarioDto {
 		this.senhaUsuario = senhaUsuario;
 	}
 	
+	public String getEnderecoUsuario() {
+		return enderecoUsuario;
+	}
+
+
+	public void setEnderecoUsuario(String enderecoUsuario) {
+		this.enderecoUsuario = enderecoUsuario;
+	}
+
+
+	public String getNumeroEnderecoUsuario() {
+		return numeroEnderecoUsuario;
+	}
+
+
+	public void setNumeroEnderecoUsuario(String numeroEnderecoUsuario) {
+		this.numeroEnderecoUsuario = numeroEnderecoUsuario;
+	}
+
+
+	public String getComplementoEnderecoUsuario() {
+		return complementoEnderecoUsuario;
+	}
+
+
+	public void setComplementoEnderecoUsuario(String complementoEnderecoUsuario) {
+		this.complementoEnderecoUsuario = complementoEnderecoUsuario;
+	}
+
+
+	public String getNumeroCartaoCredito() {
+		return numeroCartaoCredito;
+	}
+
+
+	public void setNumeroCartaoCredito(String numeroCartaoCredito) {
+		this.numeroCartaoCredito = numeroCartaoCredito;
+	}
+
+
+	public String getNomeCartaoCredito() {
+		return nomeCartaoCredito;
+	}
+
+
+	public void setNomeCartaoCredito(String nomeCartaoCredito) {
+		this.nomeCartaoCredito = nomeCartaoCredito;
+	}
+
+
+	public String getMesExpiracaoCartaoCredito() {
+		return mesExpiracaoCartaoCredito;
+	}
+
+
+	public void setMesExpiracaoCartaoCredito(String mesExpiracaoCartaoCredito) {
+		this.mesExpiracaoCartaoCredito = mesExpiracaoCartaoCredito;
+	}
+
+
+	public String getAnoExpiracaoCartaoCredito() {
+		return anoExpiracaoCartaoCredito;
+	}
+
+
+	public void setAnoExpiracaoCartaoCredito(String anoExpiracaoCartaoCredito) {
+		this.anoExpiracaoCartaoCredito = anoExpiracaoCartaoCredito;
+	}
+
+
+	public String getCodigoSegurancaCartaoCredito() {
+		return codigoSegurancaCartaoCredito;
+	}
+
+
+	public void setCodigoSegurancaCartaoCredito(String codigoSegurancaCartaoCredito) {
+		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
+	}
+
+
 	public Perfil getTipoUsuario() {
 		return tipoUsuario;
 	}
+	
 
 	public void setTipoUsuario(Perfil tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;

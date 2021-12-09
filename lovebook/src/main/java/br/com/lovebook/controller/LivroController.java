@@ -60,7 +60,7 @@ public class LivroController {
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
-		if (user.get().getTipoUsuario().getId() == 2) {
+		if (user.get().getPerfil().getId() == 1) {
 			Livro livro = livroForm.converter();
 			livroRepository.save(livro);
 			return ResponseEntity.ok(new LivroDto(livro));
@@ -76,7 +76,7 @@ public class LivroController {
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		
-		if(user.get().getTipoUsuario().getId() == 2) {
+		if(user.get().getPerfil().getId() == 1) {
 			livroRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
@@ -91,7 +91,7 @@ public class LivroController {
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
-		if (user.get().getTipoUsuario().getId() == 2) {
+		if (user.get().getPerfil().getId() == 1) {
 			Optional<Livro> livro = atualizacaoLivroForm.atualizar(livroRepository);
 			return ResponseEntity.ok(new LivroDto(livro));
 		}

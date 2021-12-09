@@ -38,6 +38,30 @@ public class UsuarioForm {
 	private String estadoUsuario;
 	@NotNull
 	@NotEmpty
+	private String enderecoUsuario;
+	@NotNull
+	@NotEmpty
+	private String numeroEnderecoUsuario;
+	@NotNull
+	@NotEmpty
+	private String complementoEnderecoUsuario;
+	@NotNull
+	@NotEmpty
+	private String numeroCartaoCredito;
+	@NotNull
+	@NotEmpty
+	private String nomeCartaoCredito;
+	@NotNull
+	@NotEmpty
+	private String mesExpiracaoCartaoCredito;
+	@NotNull
+	@NotEmpty
+	private String anoExpiracaoCartaoCredito;
+	@NotNull
+	@NotEmpty
+	private String codigoSegurancaCartaoCredito;
+	@NotNull
+	@NotEmpty
 	private String perfil;
 
 	public String getNome() {
@@ -103,6 +127,70 @@ public class UsuarioForm {
 	public void setEstadoUsuario(String estadoUsuario) {
 		this.estadoUsuario = estadoUsuario;
 	}
+	
+	public String getEnderecoUsuario() {
+		return enderecoUsuario;
+	}
+
+	public void setEnderecoUsuario(String enderecoUsuario) {
+		this.enderecoUsuario = enderecoUsuario;
+	}
+
+	public String getNumeroEnderecoUsuario() {
+		return numeroEnderecoUsuario;
+	}
+
+	public void setNumeroEnderecoUsuario(String numeroEnderecoUsuario) {
+		this.numeroEnderecoUsuario = numeroEnderecoUsuario;
+	}
+
+	public String getComplementoEnderecoUsuario() {
+		return complementoEnderecoUsuario;
+	}
+
+	public void setComplementoEnderecoUsuario(String complementoEnderecoUsuario) {
+		this.complementoEnderecoUsuario = complementoEnderecoUsuario;
+	}
+
+	public String getNumeroCartaoCredito() {
+		return numeroCartaoCredito;
+	}
+
+	public void setNumeroCartaoCredito(String numeroCartaoCredito) {
+		this.numeroCartaoCredito = numeroCartaoCredito;
+	}
+
+	public String getNomeCartaoCredito() {
+		return nomeCartaoCredito;
+	}
+
+	public void setNomeCartaoCredito(String nomeCartaoCredito) {
+		this.nomeCartaoCredito = nomeCartaoCredito;
+	}
+
+	public String getMesExpiracaoCartaoCredito() {
+		return mesExpiracaoCartaoCredito;
+	}
+
+	public void setMesExpiracaoCartaoCredito(String mesExpiracaoCartaoCredito) {
+		this.mesExpiracaoCartaoCredito = mesExpiracaoCartaoCredito;
+	}
+
+	public String getAnoExpiracaoCartaoCredito() {
+		return anoExpiracaoCartaoCredito;
+	}
+
+	public void setAnoExpiracaoCartaoCredito(String anoExpiracaoCartaoCredito) {
+		this.anoExpiracaoCartaoCredito = anoExpiracaoCartaoCredito;
+	}
+
+	public String getCodigoSegurancaCartaoCredito() {
+		return codigoSegurancaCartaoCredito;
+	}
+
+	public void setCodigoSegurancaCartaoCredito(String codigoSegurancaCartaoCredito) {
+		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
+	}
 
 	public String getPerfil() {
 		return perfil;
@@ -114,7 +202,7 @@ public class UsuarioForm {
 	
 	public Usuario converter(PerfilRepository perfilRepository) {
 		Optional<Perfil> perfil = perfilRepository.findByNome(this.perfil);
-		return new Usuario(this.nome, this.sobrenome, this.emailUsuario, this.senhaUsuario, this.sexoUsuario, this.cepUsuario, this.cidadeUsuario, this.estadoUsuario, perfil.get());
+		return new Usuario(this.nome, this.sobrenome, this.emailUsuario, this.senhaUsuario, this.sexoUsuario, this.cepUsuario, this.cidadeUsuario, this.estadoUsuario, this.enderecoUsuario, this.numeroEnderecoUsuario, this.complementoEnderecoUsuario, this.numeroCartaoCredito, this.nomeCartaoCredito, this.mesExpiracaoCartaoCredito, this.anoExpiracaoCartaoCredito, this.codigoSegurancaCartaoCredito, perfil.get());
 		
 	}	
 

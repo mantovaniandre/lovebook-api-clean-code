@@ -25,6 +25,14 @@ public class Usuario implements UserDetails {
 	private String cepUsuario;
 	private String cidadeUsuario;
 	private String estadoUsuario;
+	private String enderecoUsuario;
+	private String numeroEnderecoUsuario;
+	private String complementoEnderecoUsuario;
+	private String numeroCartaoCredito;
+	private String nomeCartaoCredito;
+	private String mesExpiracaoCartaoCredito;
+	private String anoExpiracaoCartaoCredito;
+	private String codigoSegurancaCartaoCredito;
 	@ManyToOne
 	private Perfil perfil;
 
@@ -33,7 +41,10 @@ public class Usuario implements UserDetails {
 	}
 
 	public Usuario(String nome, String sobrenome, String emailUsuario, String senhaUsuario, String sexoUsuario,
-			String cepUsuario, String cidadeUsuario, String estadoUsuario, Perfil perfil) {
+			String cepUsuario, String cidadeUsuario, String estadoUsuario, String enderecoUsuario,
+			String numeroEnderecoUsuario, String complementoEnderecoUsuario, String numeroCartaoCredito,
+			String nomeCartaoCredito, String mesExpiracaoCartaoCredito, String anoExpiracaoCartaoCredito,
+			String codigoSegurancaCartaoCredito, Perfil perfil) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -43,9 +54,17 @@ public class Usuario implements UserDetails {
 		this.cepUsuario = cepUsuario;
 		this.cidadeUsuario = cidadeUsuario;
 		this.estadoUsuario = estadoUsuario;
+		this.enderecoUsuario = enderecoUsuario;
+		this.numeroEnderecoUsuario = numeroEnderecoUsuario;
+		this.complementoEnderecoUsuario = complementoEnderecoUsuario;
+		this.numeroCartaoCredito = numeroCartaoCredito;
+		this.nomeCartaoCredito = nomeCartaoCredito;
+		this.mesExpiracaoCartaoCredito = mesExpiracaoCartaoCredito;
+		this.anoExpiracaoCartaoCredito = anoExpiracaoCartaoCredito;
+		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
 		this.perfil = perfil;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -54,20 +73,20 @@ public class Usuario implements UserDetails {
 		this.id = id;
 	}
 
-	public String getNomeUsuario() {
+	public String getNome() {
 		return nome;
 	}
 
-	public void setNomeUsuario(String nomeUsuario) {
-		this.nome = nomeUsuario;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getSobrenomeUsuario() {
+	public String getSobrenome() {
 		return sobrenome;
 	}
 
-	public void setSobrenomeUsuario(String sobrenomeUsuario) {
-		this.sobrenome = sobrenomeUsuario;
+	public void setSobrenome(String sobrenome) {
+		this.sobrenome = sobrenome;
 	}
 
 	public String getEmailUsuario() {
@@ -118,28 +137,68 @@ public class Usuario implements UserDetails {
 		this.estadoUsuario = estadoUsuario;
 	}
 
-	public Perfil getTipoUsuario() {
-		return perfil;
+	public String getEnderecoUsuario() {
+		return enderecoUsuario;
 	}
 
-	public void setTipoUsuario(Perfil tipoUsuario) {
-		this.perfil = tipoUsuario;
+	public void setEnderecoUsuario(String enderecoUsuario) {
+		this.enderecoUsuario = enderecoUsuario;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNumeroEnderecoUsuario() {
+		return numeroEnderecoUsuario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNumeroEnderecoUsuario(String numeroEnderecoUsuario) {
+		this.numeroEnderecoUsuario = numeroEnderecoUsuario;
 	}
 
-	public String getSobrenome() {
-		return sobrenome;
+	public String getComplementoEnderecoUsuario() {
+		return complementoEnderecoUsuario;
 	}
 
-	public void setSobrenome(String sobrenome) {
-		this.sobrenome = sobrenome;
+	public void setComplementoEnderecoUsuario(String complementoEnderecoUsuario) {
+		this.complementoEnderecoUsuario = complementoEnderecoUsuario;
+	}
+
+	public String getNumeroCartaoCredito() {
+		return numeroCartaoCredito;
+	}
+
+	public void setNumeroCartaoCredito(String numeroCartaoCredito) {
+		this.numeroCartaoCredito = numeroCartaoCredito;
+	}
+
+	public String getNomeCartaoCredito() {
+		return nomeCartaoCredito;
+	}
+
+	public void setNomeCartaoCredito(String nomeCartaoCredito) {
+		this.nomeCartaoCredito = nomeCartaoCredito;
+	}
+
+	public String getMesExpiracaoCartaoCredito() {
+		return mesExpiracaoCartaoCredito;
+	}
+
+	public void setMesExpiracaoCartaoCredito(String mesExpiracaoCartaoCredito) {
+		this.mesExpiracaoCartaoCredito = mesExpiracaoCartaoCredito;
+	}
+
+	public String getAnoExpiracaoCartaoCredito() {
+		return anoExpiracaoCartaoCredito;
+	}
+
+	public void setAnoExpiracaoCartaoCredito(String anoExpiracaoCartaoCredito) {
+		this.anoExpiracaoCartaoCredito = anoExpiracaoCartaoCredito;
+	}
+
+	public String getCodigoSegurancaCartaoCredito() {
+		return codigoSegurancaCartaoCredito;
+	}
+
+	public void setCodigoSegurancaCartaoCredito(String codigoSegurancaCartaoCredito) {
+		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
 	}
 
 	public Perfil getPerfil() {
@@ -150,14 +209,23 @@ public class Usuario implements UserDetails {
 		this.perfil = perfil;
 	}
 
+
 	@Override
 	public String toString() {
 		return "CadastrarUsuarioModel [id=" + id + ", nomeUsuario=" + nome + ", sobrenomeUsuario=" + sobrenome
 				+ ", emailUsuario=" + emailUsuario + ", senhaUsuario=" + senhaUsuario + ", sexoUsuario=" + sexoUsuario
 				+ ", cepUsuario=" + cepUsuario + ", cidadeUsuario=" + cidadeUsuario + ", estadoUsuario=" + estadoUsuario
+				+ ", enderecoUsuario=" + enderecoUsuario
+				+ ", numeroEnderecoUsuario=" + numeroEnderecoUsuario
+				+ ", complementoEnderecoUsuario=" + complementoEnderecoUsuario
+				+ ", numeroCartaoCredito=" + numeroCartaoCredito
+				+ ", nomeCartaoCredito=" + nomeCartaoCredito
+				+ ", mesExpiracaoCartaoCredito=" + mesExpiracaoCartaoCredito
+				+ ", anoExpiracaoCartaoCredito=" + anoExpiracaoCartaoCredito
+				+ ", codigoSegurancaCartaoCredito=" + codigoSegurancaCartaoCredito
 				+ ", tipoUsuario=" + perfil + "]";
-	}
-
+	}	
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

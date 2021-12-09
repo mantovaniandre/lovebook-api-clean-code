@@ -93,9 +93,9 @@ public class AtualizacaoUsuarioForm {
 		user.get().setCepUsuario(cepUsuario);
 		user.get().setCidadeUsuario(cidadeUsuario);
 		user.get().setEstadoUsuario(estadoUsuario);
-		user.get().setNomeUsuario(nome);
+		user.get().setNome(nome);
 		user.get().setSenhaUsuario(senhaUsuario);
-		user.get().setSobrenomeUsuario(sobrenome);
+		user.get().setSobrenome(sobrenome);
 		user.get().setSexoUsuario(sexoUsuario);
 		return user;
 	}

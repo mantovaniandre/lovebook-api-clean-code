@@ -77,6 +77,7 @@ public class LivroController {
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		
 		if(user.get().getPerfil().getId() == 1) {
+			System.out.println(id);
 			livroRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}

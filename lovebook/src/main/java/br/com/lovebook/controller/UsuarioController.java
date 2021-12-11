@@ -66,6 +66,7 @@ public class UsuarioController {
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
 		if (user.isPresent()) {
+			System.out.println(user);
 			usuarioRepository.deleteById(idUsuarioLogado);
 			return ResponseEntity.ok().build();
 		}

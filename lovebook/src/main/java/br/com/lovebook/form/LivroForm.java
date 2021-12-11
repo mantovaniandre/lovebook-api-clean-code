@@ -2,6 +2,9 @@ package br.com.lovebook.form;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Lob;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -35,7 +38,7 @@ public class LivroForm {
 	private String categoria;
 	@NotNull
 	private BigDecimal custo;
-
+	
 	public String getNome() {
 		return nome;
 	}
@@ -121,5 +124,7 @@ public class LivroForm {
 		return new Livro(this.nome, this.editora, this.idioma, this.nomeDoAutor, this.precoDeVenda, this.urlDaImagem,
 				this.quantidade, this.numeroDePaginas, this.categoria, this.custo);
 	}
+	
+	
 
 }

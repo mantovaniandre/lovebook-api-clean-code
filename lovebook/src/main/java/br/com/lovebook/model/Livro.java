@@ -25,7 +25,7 @@ public class Livro {
 	private Integer numeroDePaginas;
 	private String categoria;
 	private BigDecimal custo;
-	
+
 	public Livro () {
 		
 	}

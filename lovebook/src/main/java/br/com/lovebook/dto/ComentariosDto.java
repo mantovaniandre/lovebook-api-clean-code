@@ -15,7 +15,7 @@ public class ComentariosDto {
 	private Date data;
 	private String titulo;
 	private String comentario;
-	private Usuario usuario;
+	private String usuario;
 	private Livro livro;
 	
 	
@@ -23,7 +23,7 @@ public class ComentariosDto {
 		this.data = comentarios.get().getData();
 		this.titulo = comentarios.get().getTitulo();
 		this.comentario = comentarios.get().getComentario();
-		this.usuario = comentarios.get().getUsuario();
+		this.usuario = comentarios.get().getUsuario().getNome();
 		this.livro = comentarios.get().getLivro();
 	}
 	
@@ -32,7 +32,7 @@ public class ComentariosDto {
 		this.data = comentarios.getData();
 		this.titulo = comentarios.getTitulo();
 		this.comentario = comentarios.getComentario();
-		this.usuario = comentarios.getUsuario();
+		this.usuario = comentarios.getUsuario().getNome();
 		this.livro = comentarios.getLivro();
 	}
 	
@@ -55,10 +55,10 @@ public class ComentariosDto {
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
 	}
-	public Usuario getUsuario() {
+	public String getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
 	public Livro getLivro() {

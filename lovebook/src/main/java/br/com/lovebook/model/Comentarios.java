@@ -1,5 +1,6 @@
 package br.com.lovebook.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -8,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import br.com.lovebook.form.ComentariosForm;
 
 
 @Entity
@@ -24,12 +27,15 @@ public class Comentarios {
 	@ManyToOne
 	private Livro livro;
 
+	public Comentarios() {
+		
+	}
 	
-	public Comentarios(Date data, String titulo, String comentario, Usuario usuario, Livro livro) {
+	public Comentarios(ComentariosForm comentariosForm, Usuario usuario, Livro livro) {
 		super();
-		this.data = data;
-		this.titulo = titulo;
-		this.comentario = comentario;
+		this.data = new Date();
+		this.titulo = comentariosForm.getTituloDoComentario();
+		this.comentario = comentariosForm.getComentarioConteudo();
 		this.usuario = usuario;
 		this.livro = livro;
 	}
@@ -83,4 +89,11 @@ public class Comentarios {
 		this.livro = livro;
 	}
 
+	@Override
+	public String toString() {
+		return "Comentarios [id=" + id + ", data=" + data + ", titulo=" + titulo + ", comentario=" + comentario
+				+ ", usuario=" + usuario + ", livro=" + livro + "]";
+	}
+	
+	
 }

@@ -1,31 +1,48 @@
 package br.com.lovebook.form;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import br.com.lovebook.model.Comentarios;
-import br.com.lovebook.model.Compra;
-import br.com.lovebook.model.Livro;
-
-import br.com.lovebook.model.Usuario;
-
 
 public class ComentariosForm {
 
-	private List<Long> listaIds = new ArrayList<>();
+	@NotNull
+	@NotEmpty
+	private String tituloDoComentario;
+	@NotNull
+	@NotEmpty
+	private String comentarioConteudo;
+	private Long idDoLivro;
 
-	public List<Long> getListaIds() {
-		return listaIds;
+	public ComentariosForm() {
+		
 	}
 
-	public void setListaIds(List<Long> listaIds) {
-		this.listaIds = listaIds;
+	public String getTituloDoComentario() {
+		return tituloDoComentario;
 	}
-	
-	public Comentarios converter(Comentarios comentarios) {
-		return new Comentarios(comentarios.getData(), comentarios.getTitulo(), comentarios.getComentario(), comentarios.getUsuario(), comentarios.getLivro());
+
+	public void setTituloDoComentario(String tituloDoComentario) {
+		this.tituloDoComentario = tituloDoComentario;
 	}
-	
-	
+
+	public String getComentarioConteudo() {
+		return comentarioConteudo;
+	}
+
+	public void setComentarioConteudo(String comentarioConteudo) {
+		this.comentarioConteudo = comentarioConteudo;
+	}
+
+	public Long getIdDoLivro() {
+		return idDoLivro;
+	}
+
+	public void setIdDoLivro(Long idDoLivro) {
+		this.idDoLivro = idDoLivro;
+	}
+
 }

@@ -133,4 +133,13 @@ public class Livro {
 		this.custo = custoDoLivro;
 	}
 
+	@Override
+	public String toString() {
+		return "Livro [id=" + id + ", nome=" + nome + ", editora=" + editora + ", idioma=" + idioma + ", nomeDoAutor="
+				+ nomeDoAutor + ", precoDeVenda=" + precoDeVenda + ", urlDaImagem=" + urlDaImagem + ", quantidade="
+				+ quantidade + ", numeroDePaginas=" + numeroDePaginas + ", categoria=" + categoria + ", custo=" + custo
+				+ "]";
+	}
+
+	
 }

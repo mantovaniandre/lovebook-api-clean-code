@@ -36,4 +36,9 @@ public class Perfil implements GrantedAuthority {
 		return nome;
 	}
 
+	@Override
+	public String toString() {
+		return "Perfil [id=" + id + ", nome=" + nome + "]";
+	}
+
 }

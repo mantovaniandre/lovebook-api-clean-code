@@ -11,8 +11,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,8 @@ import br.com.lovebook.config.security.TokenService;
 import br.com.lovebook.dto.ComentariosDto;
 import br.com.lovebook.dto.CompraDto;
 import br.com.lovebook.dto.LivroDto;
+import br.com.lovebook.form.AtualizacaoComentariosForm;
+import br.com.lovebook.form.AtualizacaoLivroForm;
 import br.com.lovebook.form.ComentariosForm;
 import br.com.lovebook.form.LivroForm;
 import br.com.lovebook.model.Comentarios;
@@ -76,6 +80,40 @@ public class ComentariosController {
 		comentariosRepository.save(comentario);
 		
 		return ResponseEntity.ok(new ComentariosDto(comentario));
+	}
+	
+	@DeleteMapping
+	@Transactional 
+	public ResponseEntity<?> deletarComentarios(HttpServletRequest request){
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+		
+		Optional<Comentarios> idUsuarioComentarios = comentariosRepository.findById(idUsuarioLogado);
+		
+		if(idUsuarioComentarios.get().getUsuario().getId() == user.get().getId()) {
+			comentariosRepository.deleteByUsuario_id(idUsuarioComentarios.get().getUsuario().getId());
+			return ResponseEntity.ok().build();
+		}
+		
+		return ResponseEntity.badRequest().build();
+		
+	}
+	
+	@PutMapping
+	@Transactional
+	public ResponseEntity<ComentariosDto> atualizarComentarios(@RequestBody @Valid AtualizacaoComentariosForm atualizacaoComentariosForm,
+			HttpServletRequest request) {
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+		
+		Optional<Comentarios> idUsuarioComentarios = comentariosRepository.findById(idUsuarioLogado);
+		
+		if(idUsuarioComentarios.get().getUsuario().getId() == user.get().getId()) {
+			Optional<Comentarios> comentarios = atualizacaoComentariosForm.atualizar(comentariosRepository);
+			return ResponseEntity.ok(new ComentariosDto(comentarios));
+		}
+		
+		return ResponseEntity.badRequest().build();
 	}
 	
 	

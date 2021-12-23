@@ -74,6 +74,7 @@ public class PurchaseController {
 				for (Long id : purchaseForm.getListaIds()) {
 					Optional<Livro> livro = livroRepository.findById(id);
 					if (livro.isPresent()) {
+						livro.get().setQuantidadeDeLivros(livro.get().getQuantidadeDeLivros()-1);
 						Compra compra = purchaseForm.converter(user.get(), livro.get());
 						compraRepository.save(compra);
 					}

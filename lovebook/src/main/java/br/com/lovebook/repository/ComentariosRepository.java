@@ -14,6 +14,7 @@ public interface ComentariosRepository extends JpaRepository<Comentarios, Long> 
 	Optional<Comentarios> findById(Long id);
 	List<Comentarios> findByLivro_id(Long id);
 	Optional<Comentarios> deleteByUsuario_id(Long id);
+	List<Comentarios> findByUsuario_id(Long id);
 
 	
 }

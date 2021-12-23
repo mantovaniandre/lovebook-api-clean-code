@@ -17,6 +17,7 @@ public class AtualizacaoUsuarioForm {
 	@NotEmpty
 	private String sobrenome;
 	@NotNull
+	@NotEmpty
 	private String senhaUsuario;
 	@NotNull
 	@NotEmpty

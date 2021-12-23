@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -63,8 +64,23 @@ public class ComentariosController {
 					listaComentariosDto.add(new ComentariosDto(comentarios));
 			}
 		}
-
+	
 		return ResponseEntity.ok(listaComentariosDto);
+	}
+	
+	@GetMapping("/user")
+	@Transactional
+	public ResponseEntity<List<ComentariosDto>> listarComentariosUsuario(HttpServletRequest request){
+		Long idUsuarioLogado = idUsuarioLogado(request);
+		List<Comentarios> listaComentarios = comentariosRepository.findByUsuario_id(idUsuarioLogado);
+		List<ComentariosDto> listaComentariosDto = new ArrayList<>();
+		
+		for (Comentarios comentarios : listaComentarios) {
+			listaComentariosDto.add(new ComentariosDto(comentarios));
+		}
+		
+		return ResponseEntity.ok(listaComentariosDto);
+		
 	}
 	
 	@PostMapping

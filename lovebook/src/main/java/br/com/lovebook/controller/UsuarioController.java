@@ -91,7 +91,9 @@ public class UsuarioController {
 
 		if (user.isPresent()) {
 			Optional<Usuario> usuario = atualizacaoUsuarioForm.atualizar(idUsuarioLogado, usuarioRepository);
+			System.out.println(usuario);
 			return ResponseEntity.ok(new UsuarioDto(usuario));
+			
 		}
 
 		return ResponseEntity.notFound().build();

@@ -10,50 +10,20 @@ import br.com.lovebook.repository.UsuarioRepository;
 
 public class AtualizacaoUsuarioForm {
 
-	@NotNull
-	@NotEmpty
 	private String nome;
-	@NotNull
-	@NotEmpty
 	private String sobrenome;
-	@NotNull
-	@NotEmpty
 	private String senhaUsuario;
-	@NotNull
-	@NotEmpty
 	private String sexoUsuario;
-	@NotNull
-	@NotEmpty
 	private String cepUsuario;
-	@NotNull
-	@NotEmpty
 	private String cidadeUsuario;
-	@NotNull
-	@NotEmpty
 	private String estadoUsuario;
-	@NotNull
-	@NotEmpty
 	private String enderecoUsuario;
-	@NotNull
-	@NotEmpty
 	private String numeroEnderecoUsuario;
-	@NotNull
-	@NotEmpty
 	private String complementoEnderecoUsuario;
-	@NotNull
-	@NotEmpty
 	private String numeroCartaoCredito;
-	@NotNull
-	@NotEmpty
 	private String nomeCartaoCredito;
-	@NotNull
-	@NotEmpty
 	private String mesExpiracaoCartaoCredito;
-	@NotNull
-	@NotEmpty
 	private String anoExpiracaoCartaoCredito;
-	@NotNull
-	@NotEmpty
 	private String codigoSegurancaCartaoCredito;
 	
 	

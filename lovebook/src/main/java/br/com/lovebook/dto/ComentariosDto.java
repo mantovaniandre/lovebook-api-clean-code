@@ -11,7 +11,7 @@ import br.com.lovebook.model.Usuario;
 
 public class ComentariosDto {
 
-	
+	private Long id;
 	private Date data;
 	private String titulo;
 	private String comentario;
@@ -20,6 +20,7 @@ public class ComentariosDto {
 	
 	
 	public ComentariosDto(Optional<Comentarios> comentarios) {
+		this.id = comentarios.get().getId();
 		this.data = comentarios.get().getData();
 		this.titulo = comentarios.get().getTitulo();
 		this.comentario = comentarios.get().getComentario();
@@ -29,6 +30,7 @@ public class ComentariosDto {
 	
 	
 	public ComentariosDto(Comentarios comentarios) {
+		this.id = comentarios.getId();
 		this.data = comentarios.getData();
 		this.titulo = comentarios.getTitulo();
 		this.comentario = comentarios.getComentario();
@@ -36,7 +38,14 @@ public class ComentariosDto {
 		this.livro = comentarios.getLivro();
 	}
 	
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Date getData() {
 		return data;
 	}

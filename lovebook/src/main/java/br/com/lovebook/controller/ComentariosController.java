@@ -10,10 +10,12 @@ import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -98,20 +100,19 @@ public class ComentariosController {
 		return ResponseEntity.ok(new ComentariosDto(comentario));
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{idComentario}")
 	@Transactional 
-	public ResponseEntity<?> deletarComentarios(HttpServletRequest request){
+	public ResponseEntity<?> deletarComentarios(HttpServletRequest request, @PathVariable Long idComentario){
 		Long idUsuarioLogado = idUsuarioLogado(request);
-		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		
-		Optional<Comentarios> idUsuarioComentarios = comentariosRepository.findById(idUsuarioLogado);
+		Optional<Comentarios> comentarios = comentariosRepository.findById(idComentario);
 		
-		if(idUsuarioComentarios.get().getUsuario().getId() == user.get().getId()) {
-			comentariosRepository.deleteByUsuario_id(idUsuarioComentarios.get().getUsuario().getId());
+		if(comentarios.get().getUsuario().getId() == idUsuarioLogado) {
+			comentariosRepository.deleteById(idComentario);
 			return ResponseEntity.ok().build();
 		}
 		
-		return ResponseEntity.badRequest().build();
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		
 	}
 	

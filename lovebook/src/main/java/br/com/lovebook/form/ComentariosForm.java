@@ -1,7 +1,5 @@
 package br.com.lovebook.form;
 
-
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -16,9 +14,10 @@ public class ComentariosForm {
 	@NotEmpty
 	private String comentarioConteudo;
 	private Long idDoLivro;
+	private Double nota;
 
 	public ComentariosForm() {
-		
+
 	}
 
 	public String getTituloDoComentario() {
@@ -43,6 +42,14 @@ public class ComentariosForm {
 
 	public void setIdDoLivro(Long idDoLivro) {
 		this.idDoLivro = idDoLivro;
+	}
+
+	public Double getNota() {
+		return nota;
+	}
+
+	public void setNota(Double nota) {
+		this.nota = nota;
 	}
 
 }

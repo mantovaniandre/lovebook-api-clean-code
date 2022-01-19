@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 @Entity
 public class Livro {
 
@@ -25,6 +27,7 @@ public class Livro {
 	private Integer numeroDePaginas;
 	private String categoria;
 	private BigDecimal custo;
+	private Double nota = 0.0;
 
 	public Livro () {
 		
@@ -131,6 +134,14 @@ public class Livro {
 
 	public void setCustoDoLivro(BigDecimal custoDoLivro) {
 		this.custo = custoDoLivro;
+	}
+
+	public Double getNota() {
+		return nota;
+	}
+
+	public void setNota(Double nota) {
+		this.nota = nota;
 	}
 
 	@Override

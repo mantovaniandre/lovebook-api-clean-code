@@ -90,12 +90,15 @@ public class ComentariosController {
 	public ResponseEntity<ComentariosDto> cadastrarComentario(@RequestBody @Valid ComentariosForm comentariosForm, HttpServletRequest request){
 		Long idUsuarioLogado = idUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
-	
+		
 		Optional<Livro> livro = livroRepository.findById(comentariosForm.getIdDoLivro());
 		
 		Comentarios comentario = new Comentarios(comentariosForm, user.get(), livro.get()); 
-		
 		comentariosRepository.save(comentario);
+		
+		List<Comentarios> listaComentarios = comentariosRepository.findByLivro_id(comentariosForm.getIdDoLivro());
+		livro.get().setNota((listaComentarios.stream().map(comment -> comment.getNota()).reduce(0.0, Double::sum))/(listaComentarios.size()));
+		
 		
 		return ResponseEntity.ok(new ComentariosDto(comentario));
 	}

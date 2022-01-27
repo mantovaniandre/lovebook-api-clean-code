@@ -112,6 +112,15 @@ public class ComentariosController {
 		
 		if(comentarios.get().getUsuario().getId() == idUsuarioLogado) {
 			comentariosRepository.deleteById(idComentario);
+			Optional<Livro> livro = livroRepository.findById(comentarios.get().getLivro().getId());
+			
+			List<Comentarios> listaComentarios = comentariosRepository.findByLivro_id(comentarios.get().getLivro().getId());
+			if(listaComentarios.isEmpty()) {
+				livro.get().setNota(0.0);
+			} else {
+				livro.get().setNota((listaComentarios.stream().map(comment -> comment.getNota()).reduce(0.0, Double::sum))/(listaComentarios.size()));
+			}
+			
 			return ResponseEntity.ok().build();
 		}
 		

@@ -5,7 +5,7 @@ public class StatsReport {
 	private Double lucratividade;
 	private String categoriaMaisVendida;
 	private String livroMaisVendido;
-	private String leitorPorRegião;
+	private String leitorPorRegiao;
 	private String leitorPorGenero;
 	private Double livrosVendidos;
 
@@ -14,7 +14,7 @@ public class StatsReport {
 		this.lucratividade = lucratividade;
 		this.categoriaMaisVendida = categoriaMaisVendida;
 		this.livroMaisVendido = livroMaisVendido;
-		this.leitorPorRegião = leitorPorRegião;
+		this.leitorPorRegiao = leitorPorRegião;
 		this.leitorPorGenero = leitorPorGenero;
 		this.livrosVendidos = livrosVendidos;
 	}
@@ -43,12 +43,12 @@ public class StatsReport {
 		this.livroMaisVendido = livroMaisVendido;
 	}
 
-	public String getLeitorPorRegião() {
-		return leitorPorRegião;
+	public String getLeitorPorRegiao() {
+		return leitorPorRegiao;
 	}
 
-	public void setLeitorPorRegião(String leitorPorRegião) {
-		this.leitorPorRegião = leitorPorRegião;
+	public void setLeitorPorRegiao(String leitorPorRegiao) {
+		this.leitorPorRegiao = leitorPorRegiao;
 	}
 
 	public String getLeitorPorGenero() {

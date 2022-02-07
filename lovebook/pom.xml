@@ -9,10 +9,10 @@
 		<version>2.5.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.lojagames</groupId>
-	<artifactId>lovegames</artifactId>
+	<groupId>br.com.lovebook</groupId>
+	<artifactId>lovebook</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lovegames</name>
+	<name>lovebook</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>

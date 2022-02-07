@@ -1,10 +1,10 @@
-package br.com.lojagames.lovegames;
+package br.com.lovebook.lovegames;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LovegamesApplicationTests {
+class LovebookApplicationTests {
 
 	@Test
 	void contextLoads() {

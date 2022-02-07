@@ -1,4 +1,4 @@
-package br.com.lojagames.lovegames.service;
+package br.com.lovebook.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

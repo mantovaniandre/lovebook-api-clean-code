@@ -26,6 +26,7 @@ import br.com.lovebook.form.UsuarioForm;
 import br.com.lovebook.model.Usuario;
 import br.com.lovebook.repository.PerfilRepository;
 import br.com.lovebook.repository.UsuarioRepository;
+import br.com.lovebook.service.UsuarioService;
 
 @CrossOrigin(allowedHeaders = "*")
 @RestController
@@ -38,6 +39,8 @@ public class UsuarioController {
 	private PerfilRepository perfilRepository;
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@GetMapping
 	public ResponseEntity<UsuarioDto> exibirUsuario(HttpServletRequest request) {
@@ -53,10 +56,7 @@ public class UsuarioController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<UsuarioDto> cadastrar(@RequestBody @Valid UsuarioForm form) {
-		form.setSenhaUsuario(new BCryptPasswordEncoder().encode(form.getSenhaUsuario()));
-		Usuario usuario = form.converter(perfilRepository);
-		usuarioRepository.save(usuario);
-		return ResponseEntity.ok(new UsuarioDto(usuario));
+		return ResponseEntity.ok(this.usuarioService.salvar(form));
 	}
 
 	@DeleteMapping

@@ -3,13 +3,9 @@ package br.com.lovebook.model;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 public class Livro {

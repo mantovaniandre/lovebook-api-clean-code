@@ -44,7 +44,7 @@ public class UsuarioController {
 
 	@GetMapping
 	public ResponseEntity<UsuarioDto> exibirUsuario(HttpServletRequest request) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
+		Long idUsuarioLogado = recuperarIdDoUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 		if (user.isPresent()) {
 			return ResponseEntity.ok(new UsuarioDto(user));
@@ -62,7 +62,7 @@ public class UsuarioController {
 	@DeleteMapping
 	@Transactional
 	public ResponseEntity<?> remover(HttpServletRequest request) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
+		Long idUsuarioLogado = recuperarIdDoUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
 		if (user.isPresent()) {
@@ -79,7 +79,7 @@ public class UsuarioController {
 	@Transactional
 	public ResponseEntity<UsuarioDto> atualizar(@RequestBody @Valid AtualizacaoUsuarioForm atualizacaoUsuarioForm,
 			HttpServletRequest request) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
+		Long idUsuarioLogado = recuperarIdDoUsuarioLogado(request);
 		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
 
 		if (!atualizacaoUsuarioForm.getSenhaUsuario().isBlank()) {
@@ -99,7 +99,7 @@ public class UsuarioController {
 		return ResponseEntity.notFound().build();
 	}
 
-	private Long idUsuarioLogado(HttpServletRequest request) {
+	private Long recuperarIdDoUsuarioLogado(HttpServletRequest request) {
 		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService,
 				usuarioRepository);
 		String token = autenticacaoViaTokenFilter.recuperarToken(request);

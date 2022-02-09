@@ -2,6 +2,7 @@ package br.com.lovebook.form;
 
 import java.util.Optional;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -12,56 +13,39 @@ import br.com.lovebook.repository.UsuarioRepository;
 
 public class UsuarioForm {
 
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String nome;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String sobrenome;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String emailUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String senhaUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String sexoUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String cepUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String cidadeUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String estadoUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String enderecoUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String numeroEnderecoUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String complementoEnderecoUsuario;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String numeroCartaoCredito;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String nomeCartaoCredito;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String mesExpiracaoCartaoCredito;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String anoExpiracaoCartaoCredito;
-	@NotNull
-	@NotEmpty
+	@NotBlank
 	private String codigoSegurancaCartaoCredito;
-	@NotNull
-	@NotEmpty
+	@NotBlank(message = "Perfil não pode ficar em branco")
 	private String perfil;
 
 	public String getNome() {

@@ -5,7 +5,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.com.lovebook.form.UsuarioForm;
+import br.com.lovebook.form.usuario.FormularioAtualizacaoUsuario;
+import br.com.lovebook.form.usuario.FormularioCriacaoUsuario;
 import br.com.lovebook.model.Perfil;
 import br.com.lovebook.model.Usuario;
 import br.com.lovebook.repository.PerfilRepository;
@@ -17,15 +18,26 @@ public class UsuarioConverter {
 	private PerfilRepository perfilRepository;
 	
 	
-	public Usuario converterFormParEntidade(UsuarioForm usuarioForm) {
-		Perfil perfilComBaseNoNome = this.recuperarPerfilSeExistir(usuarioForm.getPerfil());
+	public Usuario converterFormParaEntidade(FormularioCriacaoUsuario formulario) {
+		Perfil perfilComBaseNoNome = this.recuperarPerfilSeExistir(formulario.getPerfil());
 		
-		return new Usuario(usuarioForm.getNome(), usuarioForm.getSobrenome(), usuarioForm.getEmailUsuario(), usuarioForm.getSenhaUsuario(), usuarioForm.getSexoUsuario(), usuarioForm.getCepUsuario(), 
-				usuarioForm.getCidadeUsuario(), usuarioForm.getEstadoUsuario(), usuarioForm.getEnderecoUsuario(), 
-				usuarioForm.getNumeroEnderecoUsuario(), usuarioForm.getComplementoEnderecoUsuario(), 
-				usuarioForm.getNumeroCartaoCredito(), usuarioForm.getNomeCartaoCredito(), 
-				usuarioForm.getMesExpiracaoCartaoCredito(), usuarioForm.getAnoExpiracaoCartaoCredito(), 
-				usuarioForm.getCodigoSegurancaCartaoCredito(), perfilComBaseNoNome);
+		return new Usuario(formulario.getNome(), formulario.getSobrenome(), formulario.getEmailUsuario(), formulario.getSenhaUsuario(), formulario.getSexoUsuario(), formulario.getCepUsuario(), 
+				formulario.getCidadeUsuario(), formulario.getEstadoUsuario(), formulario.getEnderecoUsuario(), 
+				formulario.getNumeroEnderecoUsuario(), formulario.getComplementoEnderecoUsuario(), 
+				formulario.getNumeroCartaoCredito(), formulario.getNomeCartaoCredito(), 
+				formulario.getMesExpiracaoCartaoCredito(), formulario.getAnoExpiracaoCartaoCredito(), 
+				formulario.getCodigoSegurancaCartaoCredito(), perfilComBaseNoNome);
+		
+	}
+	
+	public Usuario converterFormParaEntidade(FormularioAtualizacaoUsuario formulario) {
+		
+		return new Usuario(formulario.getNome(), formulario.getSobrenome(), null, formulario.getSenhaUsuario(), formulario.getSexoUsuario(), formulario.getCepUsuario(), 
+				formulario.getCidadeUsuario(), formulario.getEstadoUsuario(), formulario.getEnderecoUsuario(), 
+				formulario.getNumeroEnderecoUsuario(), formulario.getComplementoEnderecoUsuario(), 
+				formulario.getNumeroCartaoCredito(), formulario.getNomeCartaoCredito(), 
+				formulario.getMesExpiracaoCartaoCredito(), formulario.getAnoExpiracaoCartaoCredito(), 
+				formulario.getCodigoSegurancaCartaoCredito(), null);
 		
 	}
 	

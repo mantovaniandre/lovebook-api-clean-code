@@ -36,11 +36,15 @@ public class TokenService {
 
 	public boolean isTokenValido(String token) {
 		try {
-			Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
+			this.tentarConverterToken(token);
 			return true;
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	private void tentarConverterToken(String token) {
+		Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
 	}
 
 	public Long getIdUsuario(String token) {

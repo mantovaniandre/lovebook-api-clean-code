@@ -1,32 +1,53 @@
-package br.com.lovebook.form;
+package br.com.lovebook.form.usuario;
 
 import java.util.Optional;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.lovebook.model.Perfil;
 import br.com.lovebook.model.Usuario;
+import br.com.lovebook.repository.PerfilRepository;
 import br.com.lovebook.repository.UsuarioRepository;
 
-public class AtualizacaoUsuarioForm {
+public class FormularioCriacaoUsuario {
 
+	@NotBlank
 	private String nome;
+	@NotBlank
 	private String sobrenome;
+	@NotBlank
+	private String emailUsuario;
+	@NotBlank
 	private String senhaUsuario;
+	@NotBlank
 	private String sexoUsuario;
+	@NotBlank
 	private String cepUsuario;
+	@NotBlank
 	private String cidadeUsuario;
+	@NotBlank
 	private String estadoUsuario;
+	@NotBlank
 	private String enderecoUsuario;
+	@NotBlank
 	private String numeroEnderecoUsuario;
+	@NotBlank
 	private String complementoEnderecoUsuario;
+	@NotBlank
 	private String numeroCartaoCredito;
+	@NotBlank
 	private String nomeCartaoCredito;
+	@NotBlank
 	private String mesExpiracaoCartaoCredito;
+	@NotBlank
 	private String anoExpiracaoCartaoCredito;
+	@NotBlank
 	private String codigoSegurancaCartaoCredito;
-	
-	
+	@NotBlank(message = "Perfil não pode ficar em branco")
+	private String perfil;
+
 	public String getNome() {
 		return nome;
 	}
@@ -41,6 +62,14 @@ public class AtualizacaoUsuarioForm {
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
+	}
+
+	public String getEmailUsuario() {
+		return emailUsuario;
+	}
+
+	public void setEmailUsuario(String emailUsuario) {
+		this.emailUsuario = emailUsuario;
 	}
 
 	public String getSenhaUsuario() {
@@ -147,25 +176,18 @@ public class AtualizacaoUsuarioForm {
 		this.codigoSegurancaCartaoCredito = codigoSegurancaCartaoCredito;
 	}
 
-
-	public Optional<Usuario> atualizar(Long Id, UsuarioRepository usuarioRepository) {
-		Optional<Usuario> user = usuarioRepository.findById(Id);
-		user.get().setCepUsuario(cepUsuario);
-		user.get().setCidadeUsuario(cidadeUsuario);
-		user.get().setEstadoUsuario(estadoUsuario);
-		user.get().setNome(nome);
-		user.get().setSenhaUsuario(senhaUsuario);
-		user.get().setSobrenome(sobrenome);
-		user.get().setSexoUsuario(sexoUsuario);
-		user.get().setEnderecoUsuario(enderecoUsuario);
-		user.get().setNumeroEnderecoUsuario(numeroEnderecoUsuario);
-		user.get().setComplementoEnderecoUsuario(complementoEnderecoUsuario);
-		user.get().setNumeroCartaoCredito(numeroCartaoCredito);
-		user.get().setNomeCartaoCredito(nomeCartaoCredito);
-		user.get().setMesExpiracaoCartaoCredito(mesExpiracaoCartaoCredito);
-		user.get().setAnoExpiracaoCartaoCredito(anoExpiracaoCartaoCredito);
-		user.get().setCodigoSegurancaCartaoCredito(codigoSegurancaCartaoCredito);
-		return user;
+	public String getPerfil() {
+		return perfil;
 	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
+	}
+	
+	public Usuario converter(PerfilRepository perfilRepository) {
+		Optional<Perfil> perfil = perfilRepository.findByNome(this.perfil);
+		return new Usuario(this.nome, this.sobrenome, this.emailUsuario, this.senhaUsuario, this.sexoUsuario, this.cepUsuario, this.cidadeUsuario, this.estadoUsuario, this.enderecoUsuario, this.numeroEnderecoUsuario, this.complementoEnderecoUsuario, this.numeroCartaoCredito, this.nomeCartaoCredito, this.mesExpiracaoCartaoCredito, this.anoExpiracaoCartaoCredito, this.codigoSegurancaCartaoCredito, perfil.get());
+		
+	}	
 
 }

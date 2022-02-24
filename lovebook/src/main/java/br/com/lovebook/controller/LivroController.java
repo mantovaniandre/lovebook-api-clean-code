@@ -1,112 +1,81 @@
 package br.com.lovebook.controller;
 
-import java.util.List;
-import java.util.Optional;
+import br.com.lovebook.config.security.TokenService;
+import br.com.lovebook.controller.comum.ControllerPadrao;
+import br.com.lovebook.dto.LivroDto;
+import br.com.lovebook.form.FormularioAtualizacaoLivro;
+import br.com.lovebook.form.FormularioCriacaoLivro;
+import br.com.lovebook.model.Livro;
+import br.com.lovebook.repository.LivroRepository;
+import br.com.lovebook.repository.UsuarioRepository;
+import br.com.lovebook.service.LivroService;
+import br.com.lovebook.service.PerfilService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import br.com.lovebook.config.security.AutenticacaoViaTokenFilter;
-import br.com.lovebook.config.security.TokenService;
-import br.com.lovebook.dto.LivroDto;
-import br.com.lovebook.form.AtualizacaoLivroForm;
-import br.com.lovebook.form.LivroForm;
-import br.com.lovebook.model.Livro;
-import br.com.lovebook.model.Usuario;
-import br.com.lovebook.repository.LivroRepository;
-import br.com.lovebook.repository.UsuarioRepository;
+import java.util.List;
 
 @CrossOrigin(allowedHeaders = "*")
 @RestController
 @RequestMapping("/book")
-public class LivroController {
+@Transactional
+public class LivroController extends ControllerPadrao {
 
-	@Autowired
-	private LivroRepository livroRepository;
-	@Autowired
-	private TokenService tokenService;
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private LivroRepository livroRepository;
+    @Autowired
+    private TokenService tokenService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PerfilService perfilService;
+    @Autowired
+    private LivroService livroService;
 
-	@GetMapping
-	public ResponseEntity<List<Livro>> consultar(@RequestParam(defaultValue = "") String nome, @RequestParam(defaultValue = "") String categoria, @RequestParam(defaultValue = "") String autor, @RequestParam(defaultValue = "") String editora, HttpServletRequest request) {
-		List<Livro> livros = livroRepository.findByNomeLikeAndCategoriaLikeAndNomeDoAutorLikeAndEditoraLike(nome + "%", categoria + '%', autor + "%", editora + "%");
-		if (livros.isEmpty()) {
-			return ResponseEntity.notFound().build();
-		}
-//		List<LivroDto> livrosDto = new ArrayList<>();
-//		for (Livro livro : livros) {
-//			livrosDto.add(new LivroDto(livro));
-//		}
-		return ResponseEntity.ok(livros);
-	}
+    @GetMapping
+    public ResponseEntity<List<LivroDto>> consultar(@RequestParam(defaultValue = "") String nome,
+                                                 @RequestParam(defaultValue = "") String categoria, @RequestParam(defaultValue = "") String autor,
+                                                 @RequestParam(defaultValue = "") String editora, @RequestParam(defaultValue = "true") Boolean valido, HttpServletRequest request) {
+        List<LivroDto> livros = this.livroService.buscar(nome, categoria, autor, editora, valido);
+        return ResponseEntity.ok(livros);
+    }
 
-	@PostMapping
-	@Transactional
-	public ResponseEntity<LivroDto> cadastrar(@RequestBody @Valid LivroForm livroForm, HttpServletRequest request) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
-		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+    @PostMapping
+    public ResponseEntity<LivroDto> cadastrar(@RequestBody @Valid FormularioCriacaoLivro formularioCriacaoLivro,
+                                              HttpServletRequest request) {
+        Long idUsuarioLogado = this.recuperarIdDoUsuario(request);
+        perfilService.validarSeUsuarioLogadoEColaborador(idUsuarioLogado);
 
-		if (user.get().getPerfil().getId() == 1) {
-			Livro livro = livroForm.converter();
-			livroRepository.save(livro);
-			return ResponseEntity.ok(new LivroDto(livro));
-		}
+        LivroDto livroSalvo = livroService.salvar(formularioCriacaoLivro);
+        return ResponseEntity.ok(livroSalvo);
 
-		return ResponseEntity.badRequest().build();
+    }
 
-	}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> remover(@PathVariable("id") Long id, HttpServletRequest request) {
+        Long idUsuarioLogado = this.recuperarIdDoUsuario(request);
+        perfilService.validarSeUsuarioLogadoEColaborador(idUsuarioLogado);
 
-	@DeleteMapping
-	@Transactional
-	public ResponseEntity<?> remover(HttpServletRequest request, Long id) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
-		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
-		
-		if(user.get().getPerfil().getId() == 1) {
-			System.out.println(id);
-			livroRepository.deleteById(id);
-			return ResponseEntity.ok().build();
-		}
-		
-		return ResponseEntity.badRequest().build();
-	}
+        livroService.invalidar(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
-	@PutMapping
-	@Transactional
-	public ResponseEntity<LivroDto> atualizar(@RequestBody @Valid AtualizacaoLivroForm atualizacaoLivroForm,
-			HttpServletRequest request) {
-		Long idUsuarioLogado = idUsuarioLogado(request);
-		Optional<Usuario> user = usuarioRepository.findById(idUsuarioLogado);
+    }
 
-		if (user.get().getPerfil().getId() == 1) {
-			Optional<Livro> livro = atualizacaoLivroForm.atualizar(livroRepository);
-			return ResponseEntity.ok(new LivroDto(livro));
-		}
+    @PutMapping
+    public ResponseEntity<LivroDto> atualizar(@RequestBody @Valid FormularioAtualizacaoLivro formularioAtualizacaoLivro,
+                                              HttpServletRequest request) {
+        Long idUsuarioLogado = this.recuperarIdDoUsuario(request);
+        perfilService.validarSeUsuarioLogadoEColaborador(idUsuarioLogado);
 
-		return ResponseEntity.badRequest().build();
+        LivroDto livroSalvo = livroService.atualizar(formularioAtualizacaoLivro);
 
-	}
+        return ResponseEntity.ok(livroSalvo);
 
-	private Long idUsuarioLogado(HttpServletRequest request) {
-		AutenticacaoViaTokenFilter autenticacaoViaTokenFilter = new AutenticacaoViaTokenFilter(tokenService,
-				usuarioRepository);
-		String token = autenticacaoViaTokenFilter.recuperarToken(request);
-		Long idUsuarioLogado = tokenService.getIdUsuario(token);
-		return idUsuarioLogado;
-	}
+    }
 
 }

@@ -1,12 +1,11 @@
 package br.com.lovebook.repository;
 
-import java.util.Optional;
-
+import br.com.lovebook.model.Perfil;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.lovebook.model.Perfil;
+import java.util.Optional;
 
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
 
-	Optional<Perfil> findByNome(String nome);
+    Optional<Perfil> findByNome(String nome);
 }

@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -110,18 +111,37 @@ public class UsuarioServiceTest {
 		assertEquals("Carlos", usuariosCadastrados.get(0).getNome());
 
 	}
-	
+
 	@Test
 	void deveAtualizarUsuarioCorretamente() {
 		Usuario usuarioAndre = fabricaDeCadastro.criarUsuario("André");
-		
+
 		FormularioAtualizacaoUsuario atualizacaoUsuarioForm = new FormularioAtualizacaoUsuario();
 		atualizacaoUsuarioForm.setNome("Carlos");
-		
+
 		usuarioService.atualizarUsuario(atualizacaoUsuarioForm, usuarioAndre.getId());
-		
-		
-		
+
+		List<Usuario> usuariosAposAtualizacao = usuarioRepository.findAll();
+
+		assertEquals(1, usuariosAposAtualizacao.size());
+		assertEquals("Carlos", usuariosAposAtualizacao.get(0).getNome());
+
+	}
+
+	@Test
+	void deveAtualizarSenhaCorretamente() {
+		Usuario usuarioComDadosOriginais = fabricaDeCadastro.criarUsuario("André");
+
+		FormularioAtualizacaoUsuario atualizacaoUsuarioForm = new FormularioAtualizacaoUsuario();
+		atualizacaoUsuarioForm.setSenhaUsuario("321");
+
+		usuarioService.atualizarUsuario(atualizacaoUsuarioForm, usuarioComDadosOriginais.getId());
+
+		List<Usuario> usuariosAposAtualizacao = usuarioRepository.findAll();
+
+		assertEquals(1, usuariosAposAtualizacao.size());
+		assertNotEquals(FabricaDeCadastro.SENHA_PADRAO, usuariosAposAtualizacao.get(0).getSenhaUsuario());
+
 	}
 
 }

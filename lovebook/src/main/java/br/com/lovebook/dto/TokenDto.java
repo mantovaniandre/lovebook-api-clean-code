@@ -1,21 +1,18 @@
 package br.com.lovebook.dto;
 
-public class TokenDto {
+import lombok.Data;
 
-	private String token;
-	private String tipo;
+import java.io.Serializable;
 
-	public TokenDto(String token, String tipo) {
-		this.token = token;
-		this.tipo = tipo;
-	}
+@Data
+public class TokenDto implements Serializable {
 
-	public String getToken() {
-		return token;
-	}
+    private String token;
+    private String tipo;
 
-	public String getTipo() {
-		return tipo;
-	}
+    public TokenDto(String token, String tipo) {
+        this.token = token;
+        this.tipo = tipo;
+    }
 
 }

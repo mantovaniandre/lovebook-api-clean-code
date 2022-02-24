@@ -1,29 +1,28 @@
 package br.com.lovebook.config.security;
 
-import java.util.Optional;
-
+import br.com.lovebook.model.Usuario;
+import br.com.lovebook.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import br.com.lovebook.model.Usuario;
-import br.com.lovebook.repository.UsuarioRepository;
+import java.util.Optional;
 
 @Service
 public class AutenticacaoService implements UserDetailsService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<Usuario> usuario = usuarioRepository.findByEmailUsuario(username);
-		if (usuario.isPresent()) {
-			return usuario.get();
-		}
-		throw new UsernameNotFoundException("Dados inválidos");
-	}
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Usuario> usuario = usuarioRepository.findByEmailUsuario(username);
+        if (usuario.isPresent()) {
+            return usuario.get();
+        }
+        throw new UsernameNotFoundException("Dados inválidos");
+    }
 
 }

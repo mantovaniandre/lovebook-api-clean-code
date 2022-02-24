@@ -1,17 +1,20 @@
 package br.com.lovebook.dto;
 
-import java.math.BigDecimal;
+import lombok.Data;
 
-public class LivrosCompradosDto {
+import java.io.Serializable;
 
-	private String nome;
-	private String editora;
-	private String idioma;
-	private String nomeDoAutor;
-	private String urlDaImagem;
-	private Integer quantidadeComprada;
-	private Integer numeroDePaginas;
-	private String categoria;
-	
-	
+@Data
+public class LivrosCompradosDto implements Serializable {
+
+    private String nome;
+    private String editora;
+    private String idioma;
+    private String nomeDoAutor;
+    private String urlDaImagem;
+    private Integer quantidadeComprada;
+    private Integer numeroDePaginas;
+    private String categoria;
+
+
 }

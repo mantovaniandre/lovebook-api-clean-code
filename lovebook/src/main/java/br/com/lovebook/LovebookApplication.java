@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class LovebookApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(LovebookApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(LovebookApplication.class, args);
+    }
 
 }

@@ -3,8 +3,8 @@ package br.com.lovebook.service;
 import br.com.lovebook.LovebookApplication;
 import br.com.lovebook.dto.LivroDto;
 import br.com.lovebook.exception.LivroNaoEncontradoException;
-import br.com.lovebook.form.FormularioAtualizacaoLivro;
-import br.com.lovebook.form.FormularioCriacaoLivro;
+import br.com.lovebook.form.livro.FormularioAtualizacaoLivro;
+import br.com.lovebook.form.livro.FormularioCriacaoLivro;
 import br.com.lovebook.model.Livro;
 import br.com.lovebook.repository.LivroRepository;
 import br.com.lovebook.testfactory.FabricaDeCadastro;
@@ -83,20 +83,67 @@ public class LivroServiceTest {
         List<Livro> livrosDoBancoDeDados = livroRepository.findAll();
         assertEquals(1, livrosDoBancoDeDados.size());
 
-        assertEquals(false, livrosDoBancoDeDados.get(0).getValido());
+        assertEquals(false, livrosDoBancoDeDados.get(0).getAtivo());
 
     }
 
     @Test
-    void deveBuscarLivrosPorNome(){
-        fabricaDeCadastro.criarLivro("NomeA");
+    void deveBuscarLivrosPorNome() {
+        Livro livroCriado = fabricaDeCadastro.criarLivro("NomeA");
         fabricaDeCadastro.criarLivro("NomeB");
 
         List<LivroDto> livros = this.livroService.buscar("NomeA", "", "", "", true);
 
         assertEquals(1, livros.size());
+        assertEquals(livroCriado.getId(), livros.get(0).getId());
 
     }
+
+    @Test
+    void deveBuscarLivrosPorNomeGenerio() {
+        Livro livroCriado = fabricaDeCadastro.criarLivro("NomeA");
+        fabricaDeCadastro.criarLivro("NomeB");
+
+        List<LivroDto> livros = this.livroService.buscar("Nome", "", "", "", true);
+
+        assertEquals(2, livros.size());
+
+    }
+
+    @Test
+    void deveBuscarLivrosPorNomeGenerioIgnorandoMaiusculasEMinusculas() {
+        Livro livroCriado = fabricaDeCadastro.criarLivro("NOMEA");
+        fabricaDeCadastro.criarLivro("nomeb");
+
+        List<LivroDto> livros = this.livroService.buscar("Nome", "", "", "", true);
+
+        assertEquals(2, livros.size());
+
+    }
+
+    @Test
+    void deveBuscarLivrosValidos() {
+        Livro livroCriado = fabricaDeCadastro.criarLivro("NOMEA");
+        fabricaDeCadastro.criarLivro("nomeb", false);
+
+        List<LivroDto> livros = this.livroService.buscar("Nome", "", "", "", true);
+
+        assertEquals(1, livros.size());
+
+    }
+
+    @Test
+    void deveBuscarLivrosValidosEInvalidos() {
+        Livro livroCriado = fabricaDeCadastro.criarLivro("NOMEA");
+        fabricaDeCadastro.criarLivro("nomeb", false);
+
+        List<LivroDto> livros = this.livroService.buscar("Nome", "", "", "", null);
+
+        assertEquals(2, livros.size());
+
+    }
+
+
 }
 
 

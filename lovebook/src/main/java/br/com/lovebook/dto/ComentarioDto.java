@@ -1,6 +1,6 @@
 package br.com.lovebook.dto;
 
-import br.com.lovebook.model.Comentarios;
+import br.com.lovebook.model.Comentario;
 import br.com.lovebook.model.Livro;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Data
-public class ComentariosDto implements Serializable {
+public class ComentarioDto implements Serializable {
 
     private Long id;
     private Date data;
@@ -19,7 +19,7 @@ public class ComentariosDto implements Serializable {
     private Livro livro;
     private Double nota;
 
-    public ComentariosDto(Optional<Comentarios> comentarios) {
+    public ComentarioDto(Optional<Comentario> comentarios) {
         this.id = comentarios.get().getId();
         this.data = comentarios.get().getData();
         this.titulo = comentarios.get().getTitulo();
@@ -29,14 +29,14 @@ public class ComentariosDto implements Serializable {
         this.nota = comentarios.get().getNota();
     }
 
-    public ComentariosDto(Comentarios comentarios) {
-        this.id = comentarios.getId();
-        this.data = comentarios.getData();
-        this.titulo = comentarios.getTitulo();
-        this.comentario = comentarios.getComentario();
-        this.usuario = comentarios.getUsuario().getNome();
-        this.livro = comentarios.getLivro();
-        this.nota = comentarios.getNota();
+    public ComentarioDto(Comentario comentario) {
+        this.id = comentario.getId();
+        this.data = comentario.getData();
+        this.titulo = comentario.getTitulo();
+        this.comentario = comentario.getComentario();
+        this.usuario = comentario.getUsuario().getNome();
+        this.livro = comentario.getLivro();
+        this.nota = comentario.getNota();
     }
 
 

@@ -1,4 +1,4 @@
-package br.com.lovebook.form;
+package br.com.lovebook.form.livro;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

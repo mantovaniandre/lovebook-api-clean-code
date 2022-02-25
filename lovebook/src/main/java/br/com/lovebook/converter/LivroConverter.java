@@ -1,7 +1,7 @@
 package br.com.lovebook.converter;
 
-import br.com.lovebook.form.FormularioAtualizacaoLivro;
-import br.com.lovebook.form.FormularioCriacaoLivro;
+import br.com.lovebook.form.livro.FormularioAtualizacaoLivro;
+import br.com.lovebook.form.livro.FormularioCriacaoLivro;
 import br.com.lovebook.model.Livro;
 import org.springframework.stereotype.Component;
 

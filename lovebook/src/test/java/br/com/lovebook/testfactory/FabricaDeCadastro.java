@@ -1,14 +1,13 @@
 package br.com.lovebook.testfactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import br.com.lovebook.model.Livro;
 import br.com.lovebook.model.Perfil;
 import br.com.lovebook.model.Usuario;
 import br.com.lovebook.repository.LivroRepository;
 import br.com.lovebook.repository.PerfilRepository;
 import br.com.lovebook.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class FabricaDeCadastro {
@@ -34,12 +33,16 @@ public class FabricaDeCadastro {
         usuario.setNome(nomeDoUsuario);
         usuario.setSenhaUsuario(SENHA_PADRAO);
         return usuarioRepository.save(usuario);
-
     }
 
     public Livro criarLivro(String nomeDoLivro) {
+        return criarLivro(nomeDoLivro, true);
+    }
+
+    public Livro criarLivro(String nomeDoLivro, Boolean valido) {
         Livro livro = new Livro();
         livro.setNome(nomeDoLivro);
+        livro.setAtivo(valido);
         return livroRepository.save(livro);
     }
 }

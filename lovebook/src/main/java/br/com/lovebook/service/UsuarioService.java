@@ -62,7 +62,7 @@ public class UsuarioService {
         return new UsuarioDto(usuarioRecuperado);
     }
 
-    private Usuario recuperarUsuarioPorId(Long idDoUsuario) {
+    protected Usuario recuperarUsuarioPorId(Long idDoUsuario) {
         Optional<Usuario> resultadoQuery = usuarioRepository.findById(idDoUsuario);
         if (resultadoQuery.isPresent()) {
             return resultadoQuery.get();

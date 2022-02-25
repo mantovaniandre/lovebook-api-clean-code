@@ -16,18 +16,18 @@ public class Livro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String editora;
-    private String idioma;
-    private String nomeDoAutor;
+    private String nome = "";
+    private String editora = "";
+    private String idioma = "";
+    private String nomeDoAutor = "";
     private BigDecimal precoDeVenda;
-    private String urlDaImagem;
+    private String urlDaImagem = "";
     private Integer quantidade;
     private Integer numeroDePaginas;
-    private String categoria;
+    private String categoria = "";
     private BigDecimal custo;
     private Double nota = 0.0;
-    private Boolean valido = true;
+    private Boolean ativo = true;
 
     public Livro() {
 
@@ -35,7 +35,7 @@ public class Livro implements Serializable {
 
     public Livro(String nome, String editora, String idioma, String nomeDoAutor, BigDecimal precoDeVenda,
                  String urlDaImagem, Integer quantidade, Integer numeroDePaginas, String categoria, BigDecimal custo,
-                 Boolean valido) {
+                 Boolean ativo) {
         super();
         this.nome = nome;
         this.editora = editora;
@@ -47,14 +47,14 @@ public class Livro implements Serializable {
         this.numeroDePaginas = numeroDePaginas;
         this.categoria = categoria;
         this.custo = custo;
-        this.valido = valido;
+        this.ativo = ativo;
     }
 
     public Livro(Long id, String nome, String editora, String idioma, String nomeDoAutor, BigDecimal precoDeVenda,
                  String urlDaImagem, Integer quantidade, Integer numeroDePaginas, String categoria, BigDecimal custo,
-                 Boolean valido) {
+                 Boolean ativo) {
         this(nome, editora, idioma, nomeDoAutor, precoDeVenda, urlDaImagem, quantidade, numeroDePaginas, categoria,
-                custo, valido);
+                custo, ativo);
         this.id = id;
     }
 

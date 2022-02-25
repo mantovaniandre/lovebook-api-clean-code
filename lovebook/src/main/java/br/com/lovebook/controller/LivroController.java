@@ -3,9 +3,8 @@ package br.com.lovebook.controller;
 import br.com.lovebook.config.security.TokenService;
 import br.com.lovebook.controller.comum.ControllerPadrao;
 import br.com.lovebook.dto.LivroDto;
-import br.com.lovebook.form.FormularioAtualizacaoLivro;
-import br.com.lovebook.form.FormularioCriacaoLivro;
-import br.com.lovebook.model.Livro;
+import br.com.lovebook.form.livro.FormularioAtualizacaoLivro;
+import br.com.lovebook.form.livro.FormularioCriacaoLivro;
 import br.com.lovebook.repository.LivroRepository;
 import br.com.lovebook.repository.UsuarioRepository;
 import br.com.lovebook.service.LivroService;
@@ -40,8 +39,8 @@ public class LivroController extends ControllerPadrao {
     @GetMapping
     public ResponseEntity<List<LivroDto>> consultar(@RequestParam(defaultValue = "") String nome,
                                                  @RequestParam(defaultValue = "") String categoria, @RequestParam(defaultValue = "") String autor,
-                                                 @RequestParam(defaultValue = "") String editora, @RequestParam(defaultValue = "true") Boolean valido, HttpServletRequest request) {
-        List<LivroDto> livros = this.livroService.buscar(nome, categoria, autor, editora, valido);
+                                                 @RequestParam(defaultValue = "") String editora, @RequestParam(defaultValue = "true") Boolean ativo, HttpServletRequest request) {
+        List<LivroDto> livros = this.livroService.buscar(nome, categoria, autor, editora, ativo);
         return ResponseEntity.ok(livros);
     }
 

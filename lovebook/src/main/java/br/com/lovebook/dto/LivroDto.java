@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 public class LivroDto implements Serializable {
-
+    private Long id;
     private String nome;
     private String editora;
     private String idioma;
@@ -21,6 +21,7 @@ public class LivroDto implements Serializable {
     private BigDecimal custo;
 
     public LivroDto(Livro livro) {
+        this.id = livro.getId();
         this.nome = livro.getNome();
         this.editora = livro.getEditora();
         this.idioma = livro.getIdioma();

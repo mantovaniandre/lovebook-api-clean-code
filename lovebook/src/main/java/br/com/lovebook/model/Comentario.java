@@ -1,6 +1,6 @@
 package br.com.lovebook.model;
 
-import br.com.lovebook.form.ComentariosForm;
+import br.com.lovebook.form.comentario.FormularioCriacaoComentario;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 @Data
 @Entity
-public class Comentarios implements Serializable {
+public class Comentario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,18 +22,18 @@ public class Comentarios implements Serializable {
     private Livro livro;
     private Double nota;
 
-    public Comentarios() {
+    public Comentario() {
 
     }
 
-    public Comentarios(ComentariosForm comentariosForm, Usuario usuario, Livro livro) {
+    public Comentario(FormularioCriacaoComentario formularioCriacaoComentario, Usuario usuario, Livro livro) {
         super();
         this.data = new Date();
-        this.titulo = comentariosForm.getTituloDoComentario();
-        this.comentario = comentariosForm.getComentarioConteudo();
+        this.titulo = formularioCriacaoComentario.getTituloDoComentario();
+        this.comentario = formularioCriacaoComentario.getComentarioConteudo();
         this.usuario = usuario;
         this.livro = livro;
-        this.nota = comentariosForm.getNota();
+        this.nota = formularioCriacaoComentario.getNota();
     }
 
 }

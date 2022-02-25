@@ -1,4 +1,4 @@
-package br.com.lovebook.form;
+package br.com.lovebook.form.livro;
 
 import br.com.lovebook.model.Livro;
 import br.com.lovebook.repository.LivroRepository;
